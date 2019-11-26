@@ -12,7 +12,7 @@ services:
           - SAUCE_USERNAME
           - SAUCE_ACCESS_KEY
           - SAUCE_TUNNEL_IDENTIFIER
-        image: joscha/docker-sauce-connect:latest
+        image: joscha/docker-sauce-connect:4.5
         restart: always
         ports: 
           - "4445:4445"
