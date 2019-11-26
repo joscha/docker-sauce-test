@@ -1,0 +1,16 @@
+version: '2'
+services:
+    sauce_connect:
+        image: joscha/sauce-connect:latest
+        restart: always
+        expose: 
+          - 4445
+        ports: 
+          - 4445
+        command: sc -u $SAUCE_USERNAME -k $SAUCE_ACCESS_KEY
+    wdio:
+        image: node:latest
+        depends_on:
+          - "sauce_connect"
+        command: npm install && ./node_modules/.bin/wdio wdio.conf.js
+    
