@@ -5,6 +5,7 @@ services:
           - SAUCE_USERNAME
           - SAUCE_ACCESS_KEY
           - SAUCE_TUNNEL_IDENTIFIER
+        tty: true
         image: joscha/docker-sauce-connect:latest
         restart: always
         ports: 
@@ -19,6 +20,7 @@ services:
           - SAUCE_USERNAME
           - SAUCE_ACCESS_KEY
           - SAUCE_TUNNEL_IDENTIFIER
+        tty: true
         image: node:latest
         ports:
           - "4444:4444"

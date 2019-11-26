@@ -9,5 +9,5 @@ do
 done
 echo "Sauce connect is up; running tests"
 
-npm install
-./node_modules/.bin/wdio wdio.conf.js
+npm install -q
+npm test
