@@ -4,12 +4,14 @@ exports.config = {
         './test/specs/**/*.js'
     ],
     capabilities: [
-        { browserName: 'chrome', platform: 'OS X 10.13', version: 'latest' },
+        {
+            browserName: 'chrome',
+            platform: 'OS X 10.13',
+            version: 'latest',
+            tunnelIdentifier: process.env.SAUCE_TUNNEL_IDENTIFIER,
+        },
     ],
-    logLevels: {
-        webdriver: 'trace',
-        '@wdio/sauce-service': 'trace'
-    },
+    logLevel: 'warn',
     bail: 0,
     waitforTimeout: 10000,
     connectionRetryTimeout: 90000,

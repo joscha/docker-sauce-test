@@ -1,16 +1,35 @@
-version: '2'
+version: '3.2'
 services:
     sauce_connect:
-        image: joscha/sauce-connect:latest
+        environment:
+          - SAUCE_USERNAME
+          - SAUCE_ACCESS_KEY
+          - SAUCE_TUNNEL_IDENTIFIER
+        image: joscha/docker-sauce-connect:latest
         restart: always
-        expose: 
-          - 4445
         ports: 
-          - 4445
-        command: sc -u $SAUCE_USERNAME -k $SAUCE_ACCESS_KEY
+          - "4445:4445"
+        command: sc -u $SAUCE_USERNAME -k $SAUCE_ACCESS_KEY --readyfile /ready/sc --tunnel-identifier $SAUCE_TUNNEL_IDENTIFIER
+        volumes:
+            - type: bind
+              source: ready-volume
+              target: /ready  
     wdio:
+        environment:
+          - SAUCE_USERNAME
+          - SAUCE_ACCESS_KEY
+          - SAUCE_TUNNEL_IDENTIFIER
         image: node:latest
+        ports:
+          - "4444:4444"
         depends_on:
           - "sauce_connect"
-        command: npm install && ./node_modules/.bin/wdio wdio.conf.js
-    
+        command: ./run_test.sh
+        working_dir: /app
+        volumes:
+            - .:/app
+            - type: bind
+              source: ready-volume
+              target: /ready
+volumes:
+     ready-volume: 
