@@ -9,5 +9,5 @@ do
 done
 echo "Sauce connect is up; running tests"
 
-npm install -q
+npm install
 npm test

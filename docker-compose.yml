@@ -1,11 +1,17 @@
 version: '3.2'
 services:
+    static_site:
+      image: httpd:latest
+      container_name: static-site
+      ports:
+        - "80:80"
+      volumes:
+          - ./static-site:/usr/local/apache2/htdocs/
     sauce_connect:
         environment:
           - SAUCE_USERNAME
           - SAUCE_ACCESS_KEY
           - SAUCE_TUNNEL_IDENTIFIER
-        tty: true
         image: joscha/docker-sauce-connect:latest
         restart: always
         ports: 
@@ -14,7 +20,7 @@ services:
         volumes:
             - type: bind
               source: ready-volume
-              target: /ready  
+              target: /ready
     wdio:
         environment:
           - SAUCE_USERNAME
@@ -26,6 +32,7 @@ services:
           - "4444:4444"
         depends_on:
           - "sauce_connect"
+          - "static_site"
         command: ./run_test.sh
         working_dir: /app
         volumes:
